@@ -25,4 +25,4 @@ Page should render as follows:
 
 # Hosted
 
-You can see a live version at https://philmanwithbeard.github.io/work-day-scheduler/
+You can see a live version at https://philmanwithbeard.github.io/Work-Day-Scheduler/
