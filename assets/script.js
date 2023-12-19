@@ -3,7 +3,7 @@ var currentDayEl = $("#currentDay");
 var containerEl = $(".container");
 
 // Display the current day at the top of the calendar when a user opens the planner.
-const displayTime = () => dayjs().format("DD MMM YYYY");
+const displayTime = () => dayjs().format("dddd, MMMM Do YYYY");
 currentDayEl.text(displayTime());
 
 // Handler for set data
