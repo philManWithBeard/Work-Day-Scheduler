@@ -14,3 +14,11 @@ let setData = (item) => {
   data = JSON.stringify(data);
   localStorage.setItem("dailySchedule", data);
 };
+
+// Handler for get data
+let getData = (item = null) => {
+  let data = JSON.parse(localStorage.getItem("dailySchedule"));
+  return data;
+};
+
+getData();
