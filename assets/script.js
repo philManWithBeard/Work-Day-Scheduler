@@ -9,8 +9,17 @@ currentDayEl.text(displayTime());
 // Handler for set data
 let setData = (item) => {
   let data = getData(); // call getdata handler for getting  data from list
-  data = data != false ? data : [];
-  data.push(item);
+  let change = 0;
+
+  data.forEach((dHour, i) => {
+    if (dHour[0] == item[0]) {
+      data[i][1] = item[1];
+      change++;
+    }
+  });
+  if (change === 0) {
+    data.push(item);
+  }
   data = JSON.stringify(data);
   localStorage.setItem("dailySchedule", data);
 };
@@ -18,6 +27,9 @@ let setData = (item) => {
 // Handler for get data
 let getData = (item = null) => {
   let data = JSON.parse(localStorage.getItem("dailySchedule"));
+  if (!data) {
+    data = [];
+  }
   return data;
 };
 
@@ -49,17 +61,15 @@ const printTimeBlocks = (hourText, hourID, desc) => {
 
 // Present timeblocks for standard business hours when the user scrolls down.
 const hourGenerator = () => {
-  let data = JSON.parse(localStorage.getItem("dailySchedule"));
+  let data = getData();
 
   for (let h = 9; h <= 17; h++) {
     let rHour = "";
     data.forEach((record) => {
       if (h == record[0]) {
-        console.log(record[0]);
         rHour = record[1];
       }
     });
-    console.log(rHour);
     if (h < 12) {
       printTimeBlocks(h + "AM", h, rHour);
     } else if (h === 12) {
