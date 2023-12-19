@@ -71,3 +71,8 @@ const hourGenerator = () => {
 };
 
 hourGenerator();
+
+// Allow a user to enter an event when they click a timeblock.
+containerEl.on("mousedown", ".description", (event) => {
+  $(event.target).parent().find(".description").attr("contentEditable", true);
+});
