@@ -46,3 +46,28 @@ const printTimeBlocks = (hourText, hourID, desc) => {
     descriptionTdEl.addClass("future");
   }
 };
+
+// Present timeblocks for standard business hours when the user scrolls down.
+const hourGenerator = () => {
+  let data = JSON.parse(localStorage.getItem("dailySchedule"));
+
+  for (let h = 9; h <= 17; h++) {
+    let rHour = "";
+    data.forEach((record) => {
+      if (h == record[0]) {
+        console.log(record[0]);
+        rHour = record[1];
+      }
+    });
+    console.log(rHour);
+    if (h < 12) {
+      printTimeBlocks(h + "AM", h, rHour);
+    } else if (h === 12) {
+      printTimeBlocks(h + "PM", h, rHour);
+    } else {
+      printTimeBlocks(h - 12 + "PM", h, rHour);
+    }
+  }
+};
+
+hourGenerator();
