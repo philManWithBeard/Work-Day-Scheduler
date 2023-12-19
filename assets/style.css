@@ -86,7 +86,12 @@ header {
 }
 
 
-.saveBtn i:hover {
-  font-size: 20px;
-  transition: all 0.3s ease-in-out;
+.saveBtn:hover {
+  transition: all 0.1s ease-in-out;
+  background-color: darkseagreen;
+}
+
+.saveBtn:active {
+  transition: all 0.1s ease-in-out;
+  background-color: #ff6961;
 }
