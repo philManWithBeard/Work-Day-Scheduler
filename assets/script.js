@@ -76,3 +76,10 @@ hourGenerator();
 containerEl.on("mousedown", ".description", (event) => {
   $(event.target).parent().find(".description").attr("contentEditable", true);
 });
+
+// Save the event in local storage when the save button is clicked in that timeblock.
+// Persist events between refreshes of a page.
+containerEl.on("mousedown", ".saveBtn", (event) => {
+  target = $(event.target).parent();
+  setData([target.attr("id"), target.find(".description").text()]);
+});
