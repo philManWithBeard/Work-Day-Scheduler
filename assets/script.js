@@ -11,12 +11,15 @@ let setData = (item) => {
   let data = getData(); // call getdata handler for getting  data from list
   let change = 0;
 
+  //
   data.forEach((dHour, i) => {
     if (dHour[0] == item[0]) {
       data[i][1] = item[1];
       change++;
     }
   });
+
+  //
   if (change === 0) {
     data.push(item);
   }
@@ -27,6 +30,8 @@ let setData = (item) => {
 // Handler for get data
 let getData = (item = null) => {
   let data = JSON.parse(localStorage.getItem("dailySchedule"));
+
+  //
   if (!data) {
     data = [];
   }
@@ -41,9 +46,9 @@ const printTimeBlocks = (hourText, hourID, desc) => {
 
   const hourTdEl = $("<td>").addClass("hour").text(hourText);
 
-  const descriptionTdEl = $("<td>").addClass("description").text(desc);
+  const descriptionTdEl = $("<textarea>").addClass("description").text(desc);
 
-  const buttonTdEl = $("<td>").addClass("saveBtn");
+  const buttonTdEl = $("<button>").addClass("saveBtn");
 
   hourRowEl.append(hourRowEl, hourTdEl, descriptionTdEl, buttonTdEl);
 
@@ -62,14 +67,17 @@ const printTimeBlocks = (hourText, hourID, desc) => {
 // Present timeblocks for standard business hours when the user scrolls down.
 const hourGenerator = () => {
   let data = getData();
-
+  //
   for (let h = 9; h <= 17; h++) {
     let rHour = "";
+    //
     data.forEach((record) => {
+      //
       if (h == record[0]) {
         rHour = record[1];
       }
     });
+    //
     if (h < 12) {
       printTimeBlocks(h + "AM", h, rHour);
     } else if (h === 12) {
@@ -82,14 +90,10 @@ const hourGenerator = () => {
 
 hourGenerator();
 
-// Allow a user to enter an event when they click a timeblock.
-containerEl.on("mousedown", ".description", (event) => {
-  $(event.target).parent().find(".description").attr("contentEditable", true);
-});
-
 // Save the event in local storage when the save button is clicked in that timeblock.
 // Persist events between refreshes of a page.
-containerEl.on("mousedown", ".saveBtn", (event) => {
+containerEl.on("click", ".saveBtn", (event) => {
   target = $(event.target).parent();
-  setData([target.attr("id"), target.find(".description").text()]);
+
+  setData([target.attr("id"), target.find(".description").val()]);
 });
