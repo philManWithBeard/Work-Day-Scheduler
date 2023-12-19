@@ -36,4 +36,53 @@ const printTimeBlocks = (hourText, hourID, desc) => {
   hourRowEl.append(hourRowEl, hourTdEl, descriptionTdEl, buttonTdEl);
 
   containerEl.append(hourRowEl);
+
+    // Color-code each timeblock based on past, present, and future when the timeblock is viewed.
+  if (parseInt(dayjs().format("H")) > hourID) {
+    descriptionTdEl.addClass("past");
+  } else if (parseInt(dayjs().format("H")) === hourID) {
+    descriptionTdEl.addClass("present");
+  } else {
+    descriptionTdEl.addClass("future");
+  }
 };
+
+};
+
+
+// Present timeblocks for standard business hours when the user scrolls down.
+const hourGenerator = () => {
+  let data = JSON.parse(localStorage.getItem("dailySchedule"));
+
+  for (let h = 9; h <= 17; h++) {
+    let rHour = "";
+    data.forEach((record) => {
+      if (h == record[0]) {
+        console.log(record[0]);
+        rHour = record[1];
+      }
+    });
+    console.log(rHour);
+    if (h < 12) {
+      printTimeBlocks(h + "AM", h, rHour);
+    } else if (h === 12) {
+      printTimeBlocks(h + "PM", h, rHour);
+    } else {
+      printTimeBlocks(h - 12 + "PM", h, rHour);
+    }
+  }
+};
+
+hourGenerator();
+
+// Allow a user to enter an event when they click a timeblock.
+containerEl.on("mousedown", ".description", (event) => {
+  $(event.target).parent().find(".description").attr("contentEditable", true);
+});
+
+// Save the event in local storage when the save button is clicked in that timeblock.
+// Persist events between refreshes of a page.
+containerEl.on("mousedown", ".saveBtn", (event) => {
+  target = $(event.target).parent();
+  setData([target.attr("id"), target.find(".description").text()]);
+});
