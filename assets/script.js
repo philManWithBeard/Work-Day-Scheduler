@@ -22,3 +22,18 @@ let getData = (item = null) => {
 };
 
 getData();
+
+// print time blocks to screen
+const printTimeBlocks = (hourText, hourID, desc) => {
+  const hourRowEl = $("<tr>").addClass("row time-block").attr("id", hourID);
+
+  const hourTdEl = $("<td>").addClass("hour").text(hourText);
+
+  const descriptionTdEl = $("<td>").addClass("description").text(desc);
+
+  const buttonTdEl = $("<td>").addClass("saveBtn");
+
+  hourRowEl.append(hourRowEl, hourTdEl, descriptionTdEl, buttonTdEl);
+
+  containerEl.append(hourRowEl);
+};
